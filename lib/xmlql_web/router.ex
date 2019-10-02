@@ -13,14 +13,15 @@ defmodule XmlqlWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", XmlqlWeb do
-    pipe_through :browser
+  scope "/" do
+    pipe_through :api
 
-    get "/", PageController, :index
+    forward "/api", Absinthe.Plug,
+      schema: XmlqlWeb.Schema
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: XmlqlWeb.Schema,
+      interface: :simple
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", XmlqlWeb do
-  #   pipe_through :api
-  # end
 end
