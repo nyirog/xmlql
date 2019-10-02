@@ -38,7 +38,11 @@ defmodule Xmlql.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:absinthe, "~> 1.5.0-alpha"},
+      {:absinthe_plug, "~> 1.5.0-alpha"},
+      {:absinthe_phoenix, "~> 1.5.0-aplha"},
+      {:absinthe_relay, "~> 1.5.0-alpha"},
     ]
   end
 end
