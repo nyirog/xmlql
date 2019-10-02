@@ -9,7 +9,8 @@ defmodule Xmlql.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-      XmlqlWeb.Endpoint
+      XmlqlWeb.Endpoint,
+      Xmlql.Repo
       # Starts a worker by calling: Xmlql.Worker.start_link(arg)
       # {Xmlql.Worker, arg},
     ]
