@@ -26,4 +26,22 @@ defmodule XmlqlWeb.Schema do
     field :title, :string
   end
 
+  mutation do
+
+    field :create_book, :book do
+      arg :book, :book_input
+      resolve &Resolvers.BookStore.create_book/3
+    end
+
+  end
+
+  @desc "book input"
+  input_object :book_input do
+    field :ISBN, :id, name: "isbn"
+    field :author, :string
+    field :date, :string
+    field :publisher, :string
+    field :title, :string
+  end
+
 end

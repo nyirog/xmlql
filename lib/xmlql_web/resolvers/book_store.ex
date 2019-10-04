@@ -13,4 +13,8 @@ defmodule XmlqlWeb.Resolvers.BookStore do
     {:ok, Repo.list()}
   end
 
+  def create_book(_, %{book: book}, _) do
+    {:ok, Repo.create(book)}
+  end
+
 end

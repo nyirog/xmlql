@@ -1,26 +1,30 @@
 defmodule Xmlql.Repo do
   use GenServer
 
+  alias Xmlql.Model.BookStore
+
   def start_link([]) do
     GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
   end
   
   @impl true
   def init(:ok) do
-    {:ok, Xmlql.Model.BookStore.parse_xml()}
+    xsd = BookStore.parse_xsd()
+    xml = BookStore.parse_xml(xsd)
+    {:ok, %{xml: xml, xsd: xsd}}
   end
 
   @impl true
-  def handle_call(:list, _from, state) do
-    {:reply, state, state}
+  def handle_call(:list, _from, %{xml: books} = state) do
+    {:reply, books, state}
   end
 
   @impl true
-  def handle_call({:filter, filters}, _from, state) do
+  def handle_call({:filter, filters}, _from, %{xml: books} = state) do
     {
       :reply,
       Enum.filter(
-        state,
+        books,
         fn book ->
           Enum.reduce(
             Map.to_list(filters),
@@ -36,12 +40,21 @@ defmodule Xmlql.Repo do
     }
   end
 
+  def handle_call({:create, book}, _from, %{xml: books} = state) do
+    normalized_book = BookStore.normalize_book(book)
+    {:reply, normalized_book, Map.put(state, :xml, [normalized_book|books])}
+  end
+
   def list() do
     GenServer.call(__MODULE__, :list)
   end
 
   def filter(filters) do
     GenServer.call(__MODULE__, {:filter, filters})
+  end
+
+  def create(book) do
+    GenServer.call(__MODULE__, {:create, book})
   end
 
 end
