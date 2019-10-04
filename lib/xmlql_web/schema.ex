@@ -6,6 +6,7 @@ defmodule XmlqlWeb.Schema do
   query do
 
     field :book_store, list_of(:book) do
+      arg :filter, :book_filter
       resolve &Resolvers.BookStore.list_books/3
     end
 
@@ -18,4 +19,11 @@ defmodule XmlqlWeb.Schema do
     field :publisher, :string
     field :title, :string
   end
+
+  @desc "search filter for book author and title with partial match"
+  input_object :book_filter do
+    field :author, :string
+    field :title, :string
+  end
+
 end
