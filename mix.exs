@@ -43,6 +43,7 @@ defmodule Xmlql.MixProject do
       {:absinthe_plug, "~> 1.5.0-alpha"},
       {:absinthe_phoenix, "~> 1.5.0-aplha"},
       {:absinthe_relay, "~> 1.5.0-alpha"},
+      {:erlsom, "~> 1.5"},
     ]
   end
 end
