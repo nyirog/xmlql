@@ -35,7 +35,7 @@ defmodule Xmlql.Model.BookStore do
     {:ok, xml} = :erlsom.write(store, xsd, output: :binary)
 
     {:ok, file} = File.open(Path.join([__DIR__, "BookStore.xml"]), [:write])
-    IO.binwrite(file, xml)
+    :ok = IO.binwrite(file, xml)
     File.close(file)
   end
 

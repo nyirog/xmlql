@@ -40,9 +40,11 @@ defmodule Xmlql.Repo do
     }
   end
 
-  def handle_call({:create, book}, _from, %{xml: books} = state) do
+  def handle_call({:create, book}, _from, %{xml: books, xsd: xsd} = state) do
     normalized_book = BookStore.normalize_book(book)
-    {:reply, normalized_book, Map.put(state, :xml, [normalized_book|books])}
+    updated_books = [normalized_book | books]
+    :ok = BookStore.write_xml(updated_books, xsd)
+    {:reply, normalized_book, Map.put(state, :xml, updated_books)}
   end
 
   def list() do

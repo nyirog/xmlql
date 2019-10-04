@@ -37,11 +37,11 @@ defmodule XmlqlWeb.Schema do
 
   @desc "book input"
   input_object :book_input do
-    field :ISBN, :id, name: "isbn"
-    field :author, :string
+    field :ISBN, non_null(:id), name: "isbn"
+    field :author, non_null(:string)
     field :date, :string
-    field :publisher, :string
-    field :title, :string
+    field :publisher, non_null(:string)
+    field :title, non_null(:string)
   end
 
 end
