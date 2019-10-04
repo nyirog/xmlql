@@ -3,19 +3,18 @@ defmodule XmlqlWeb.Schema do
 
   query do
 
-    field :menu_items, list_of(:menu_item) do
+    field :book_store, list_of(:book) do
       resolve fn _, _, _ ->
-        {:ok, []}
+        {:ok, Xmlql.Model.BookStore.parse_xml()}
       end
     end
 
   end
 
-  object :menu_item do
-    field :id, :id
-    field :name, :string
-    field :description, :string
+  object :book do
+    field :author, :string
+    field :date, :string
+    field :publisher, :string
+    field :title, :string
   end
-
-
 end
