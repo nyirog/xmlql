@@ -5,13 +5,14 @@ defmodule XmlqlWeb.Schema do
 
     field :book_store, list_of(:book) do
       resolve fn _, _, _ ->
-        {:ok, Xmlql.Model.BookStore.parse_xml()}
+        {:ok, Xmlql.Repo.list()}
       end
     end
 
   end
 
   object :book do
+    field :ISBN, :id, name: "isbn"
     field :author, :string
     field :date, :string
     field :publisher, :string
