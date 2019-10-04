@@ -11,6 +11,11 @@ defmodule Xmlql.Model.BookStore do
   def parse_xml() do
     {:ok, xsd} = :erlsom.compile_xsd_file(Path.join([__DIR__, "BookStore.xsd"]))
     {:ok, xml, _} = :erlsom.scan_file(Path.join([__DIR__, "BookStore.xml"]), xsd)
-    xml
+
+    store = book_store(xml)
+    store[:book]
+    |> Enum.map(
+      fn book -> book_type(book) |> Enum.into(%{}) |> Map.delete(:anyAttribs) end
+    )
   end
 end
