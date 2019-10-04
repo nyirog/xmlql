@@ -1,12 +1,12 @@
 defmodule XmlqlWeb.Schema do
   use Absinthe.Schema
 
+  alias XmlqlWeb.Resolvers
+
   query do
 
     field :book_store, list_of(:book) do
-      resolve fn _, _, _ ->
-        {:ok, Xmlql.Repo.list()}
-      end
+      resolve &Resolvers.BookStore.list_books/3
     end
 
   end
