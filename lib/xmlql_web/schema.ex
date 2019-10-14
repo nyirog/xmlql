@@ -3,6 +3,8 @@ defmodule XmlqlWeb.Schema do
 
   alias XmlqlWeb.Resolvers
 
+  import Absinthe.Schema
+
   query do
 
     field :book_store, list_of(:book) do
@@ -42,6 +44,37 @@ defmodule XmlqlWeb.Schema do
     field :date, :string
     field :publisher, non_null(:string)
     field :title, non_null(:string)
+  end
+
+  def build(%Absinthe.Type.Object{} = schema) do
+    schema
+    |> Map.get(:fields)
+    |> Enum.filter(fn {k, _} -> k not in [:__schema, :__type, :__typename] end)
+    |> Enum.map(fn {k, v} -> {k, build(v)} end)
+    |> Enum.into(%{})
+  end
+
+  def build(%Absinthe.Type.Field{} = schema) do
+    schema
+    |> Map.get(:type)
+    |> build()
+  end
+
+  def build(%Absinthe.Type.List{} = schema) do
+    list_type = schema
+    |> Map.get(:of_type)
+    |> build()
+    {:list, list_type}
+  end
+
+  def build(%Absinthe.Type.Scalar{} = schema) do
+    schema
+    |> Map.get(:identifier)
+  end
+
+  def build(schema) when is_atom(schema) do
+    lookup_type(__MODULE__, schema)
+    |> build()
   end
 
 end
