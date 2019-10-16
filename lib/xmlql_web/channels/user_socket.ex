@@ -1,5 +1,6 @@
 defmodule XmlqlWeb.UserSocket do
   use Phoenix.Socket
+  use Absinthe.Phoenix.Socket, schema: XmlqlWeb.Schema
 
   ## Channels
   # channel "room:*", XmlqlWeb.RoomChannel

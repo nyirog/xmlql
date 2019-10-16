@@ -14,6 +14,14 @@ defmodule XmlqlWeb.Schema do
 
   end
 
+  subscription do
+    field :new_book, :book do
+      config fn _args, _info ->
+        {:ok, topic: "*"}
+      end
+    end
+  end
+
   object :book do
     field :ISBN, :id, name: "isbn"
     field :author, :string

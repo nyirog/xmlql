@@ -21,7 +21,8 @@ defmodule XmlqlWeb.Router do
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: XmlqlWeb.Schema,
-      interface: :simple
+      interface: :simple,
+      socket: XmlqlWeb.UserSocket
   end
 
 end

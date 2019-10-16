@@ -1,5 +1,6 @@
 defmodule XmlqlWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :xmlql
+  use Absinthe.Phoenix.Endpoint
 
   socket "/socket", XmlqlWeb.UserSocket,
     websocket: true,

@@ -10,7 +10,8 @@ defmodule Xmlql.Application do
     children = [
       # Start the endpoint when the application starts
       XmlqlWeb.Endpoint,
-      Xmlql.Repo
+      Xmlql.Repo,
+      {Absinthe.Subscription, XmlqlWeb.Endpoint}
       # Starts a worker by calling: Xmlql.Worker.start_link(arg)
       # {Xmlql.Worker, arg},
     ]
